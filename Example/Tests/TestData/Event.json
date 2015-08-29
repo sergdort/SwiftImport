@@ -1,0 +1,14 @@
+[
+	{
+		"id" : 1,
+		"name" : "WWDC 2015",
+		"location_name" : "San Francisco",
+		"location_name" : "Place # X"
+	},
+	{
+		"id" : 2,
+		"name" : "WWDC 2014",
+		"location_name" : "San Francisco",
+		"location_name" : "Place # X1"
+	}
+ ]

@@ -3,8 +3,8 @@ use_frameworks!
 
 
 target 'SwiftImport_Tests', :exclusive => true do
-  pod "SwiftImport", :path => "../"
-
-  pod 'Quick', '~> 0.3.1'
-  pod 'Nimble'
+   pod "SwiftImport", :path => "../"
+   pod 'Quick', :git => 'https://github.com/Quick/Quick.git', :branch => ’swift-2.0’
+   pod 'Nimble', :git => 'https://github.com/Quick/Nimble.git', :branch => 'swift-2.0'
+   pod 'MagicalRecord'
 end
