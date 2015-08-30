@@ -1,5 +1,5 @@
 //
-//  Event+CoreDataProperties.swift
+//  City+CoreDataProperties.swift
 //  SwiftImport
 //
 //  Created by Segii Shulga on 8/30/15.
@@ -12,12 +12,10 @@
 import Foundation
 import CoreData
 
-extension Event {
+extension City {
 
-    @NSManaged var address: String?
-    @NSManaged var eventId: NSNumber?
-    @NSManaged var locationName: String?
+    @NSManaged var cityId: NSNumber?
     @NSManaged var name: String?
-    @NSManaged var creator: User?
+    @NSManaged var people: NSSet?
 
 }

@@ -1,27 +1,27 @@
 //
-//  User.swift
-//  
+//  City.swift
+//  SwiftImport
 //
-//  Created by Segii Shulga on 8/29/15.
-//
+//  Created by Segii Shulga on 8/30/15.
+//  Copyright © 2015 CocoaPods. All rights reserved.
 //
 
 import Foundation
 import CoreData
 
-class User: NSManagedObject {
+class City: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 
 }
 
-extension User {
+extension City {
    override class func mappedKeys() -> [String : String] {
-      return [ "id" : "userId", "name" : "name", "last_name" : "lastName", "home_city" : "homeCity", "events" : "createdEvents"]
+      return [ "id" : "cityId", "name" : "name"]
    }
-
+   
    override class func relatedByAttribute() -> String {
-      return "userId"
+      return "cityId"
    }
    
    override class func relatedJsonKey() -> String {

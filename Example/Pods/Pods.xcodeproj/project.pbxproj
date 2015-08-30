@@ -47,7 +47,7 @@
 		4A02BE948191D7E669D6ECB3A42A709B /* MagicalRecord+ErrorHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = E42747582FF69CBDB12603D8B5C045B8 /* MagicalRecord+ErrorHandling.m */; };
 		4A1D0D6D30009675C07C376D25B4FE6C /* Functional.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9F5B79EA4750F95A277295B7C9A13 /* Functional.swift */; };
 		4ED5A9F0A2EEC3BF10BA3E6ADE0D8D9C /* QuickSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = C414D73D3BDC8F94CB4670D2557E1FC2 /* QuickSpec.m */; };
-		50C98C84E28050AFC10A85B1349D5E89 /* CoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83721EF7D488D7ADA631BB5FA73D1F61 /* CoreDataImporter.swift */; };
+		50C98C84E28050AFC10A85B1349D5E89 /* SwiftImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83721EF7D488D7ADA631BB5FA73D1F61 /* SwiftImport.swift */; };
 		54CF0C69AC0EAD175A335C73B200AD2D /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8A3BECC87E9DB806D343B4FD46A602 /* Example.swift */; };
 		557E51667BCB4AB85DF3DC2BDA194241 /* BeCloseTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B577BDD92DADB6CCF1913382E35607E /* BeCloseTo.swift */; };
 		56F8F621048F92171515BD2D808F7A85 /* BeGreaterThan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C64DA81F41A5F167B0A48FE064131B /* BeGreaterThan.swift */; };
@@ -67,7 +67,7 @@
 		7041BF7EE138DF98A9CA6784C0EACB9C /* NSPersistentStoreCoordinator+MagicalRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 0836E6BE00A3D125480D35DD759FE328 /* NSPersistentStoreCoordinator+MagicalRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7134CFE8826C5DE34FE16677215830AD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE895A23E20901632D4C1CF8187159A /* Foundation.framework */; };
 		7376928A41119FB5E9DF1AE025A8B9C3 /* MagicalRecord+Setup.m in Sources */ = {isa = PBXBuildFile; fileRef = F35AC3F4FCDE9EFB9ACF61BC098D388C /* MagicalRecord+Setup.m */; };
-		753E756082A10D08038DBE8C408AC35B /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731B780334E88A3206B61887584FA20C /* CoreDataExtensions.swift */; };
+		753E756082A10D08038DBE8C408AC35B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731B780334E88A3206B61887584FA20C /* Extensions.swift */; };
 		7840BF617E8EED7DE9089FE009F89824 /* DSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FB967EF4B3BD71D599E62CE17F9AEF /* DSL.swift */; };
 		7882A56063EFC82DD62A1AC0862B60B6 /* Quick-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B08E5FF477436C9AB784207BFE2A94D2 /* Quick-dummy.m */; };
 		791175EAC10F12FA28C3F0034255C35D /* MagicalRecordInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0E3499D7FE55D959F64DC5778025762D /* MagicalRecordInternal.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -75,8 +75,8 @@
 		7DC8BCEE75254C0E12640F8FB06A5657 /* SourceLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3594C31AD24ADDE1482955BDB979805 /* SourceLocation.swift */; };
 		803116FA1F047DC9AC824E501B31A162 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CF8A04E38F2510CDC3156C36392A6 /* JSON.swift */; };
 		83CE6F8E16D43410678F5182F23E9A10 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C555CE37FEB460F73A9450692DA28692 /* XCTest.framework */; };
-		842183E31B92339500120D30 /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731B780334E88A3206B61887584FA20C /* CoreDataExtensions.swift */; settings = {ASSET_TAGS = (); }; };
-		842183E41B92339500120D30 /* CoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83721EF7D488D7ADA631BB5FA73D1F61 /* CoreDataImporter.swift */; settings = {ASSET_TAGS = (); }; };
+		842183E31B92339500120D30 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731B780334E88A3206B61887584FA20C /* Extensions.swift */; settings = {ASSET_TAGS = (); }; };
+		842183E41B92339500120D30 /* SwiftImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83721EF7D488D7ADA631BB5FA73D1F61 /* SwiftImport.swift */; settings = {ASSET_TAGS = (); }; };
 		842183E51B92339500120D30 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CF8A04E38F2510CDC3156C36392A6 /* JSON.swift */; settings = {ASSET_TAGS = (); }; };
 		842183E61B92339500120D30 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B158B030715536C7335F67270634844 /* Operators.swift */; settings = {ASSET_TAGS = (); }; };
 		842183E71B92339500120D30 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = E820E23D643C5AFCBA903E77848E43B4 /* Optional.swift */; settings = {ASSET_TAGS = (); }; };
@@ -276,7 +276,7 @@
 		7210EBC0F2FD474AB6E384DAFC856666 /* Quick.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Quick.xcconfig; sourceTree = "<group>"; };
 		723815FB8B5A5D138653CE26634FA624 /* Pods_SwiftImport_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftImport_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		72C64DA81F41A5F167B0A48FE064131B /* BeGreaterThan.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeGreaterThan.swift; path = Nimble/Matchers/BeGreaterThan.swift; sourceTree = "<group>"; };
-		731B780334E88A3206B61887584FA20C /* CoreDataExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CoreDataExtensions.swift; sourceTree = "<group>"; };
+		731B780334E88A3206B61887584FA20C /* Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7353722D87B963D816F939F8FA31924C /* AllPass.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AllPass.swift; path = Nimble/Matchers/AllPass.swift; sourceTree = "<group>"; };
 		78C979FF632F1EF909E3811AA7713F31 /* NMBExceptionCapture.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NMBExceptionCapture.m; path = Nimble/objc/NMBExceptionCapture.m; sourceTree = "<group>"; };
 		7B7BAD4B94A5CCE5489231FE5AE01F0F /* NSManagedObjectModel+MagicalRecord.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSManagedObjectModel+MagicalRecord.h"; path = "MagicalRecord/Categories/NSManagedObjectModel+MagicalRecord.h"; sourceTree = "<group>"; };
@@ -285,7 +285,7 @@
 		82215B53E853224354B82B4A937FD06C /* NSManagedObjectContext+MagicalChainSave.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObjectContext+MagicalChainSave.m"; path = "MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalChainSave.m"; sourceTree = "<group>"; };
 		824285511501A96163280F475E55C4A1 /* NSPersistentStoreCoordinator+MagicalRecord.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSPersistentStoreCoordinator+MagicalRecord.m"; path = "MagicalRecord/Categories/NSPersistentStoreCoordinator+MagicalRecord.m"; sourceTree = "<group>"; };
 		825037EA67C0D284A9A6158319CDAA51 /* Quick.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Quick.h; path = Quick/Quick.h; sourceTree = "<group>"; };
-		83721EF7D488D7ADA631BB5FA73D1F61 /* CoreDataImporter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CoreDataImporter.swift; sourceTree = "<group>"; };
+		83721EF7D488D7ADA631BB5FA73D1F61 /* SwiftImport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwiftImport.swift; sourceTree = "<group>"; };
 		84C8B91F0238C14D193BC7FD00BAAC98 /* QuickSpec.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QuickSpec.h; path = Quick/QuickSpec.h; sourceTree = "<group>"; };
 		8590E1F90BBE285C70CC792F84E14A0F /* Pods-SwiftImport_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-SwiftImport_Tests.modulemap"; sourceTree = "<group>"; };
 		86672208432C25B690AB6612B81F9E6E /* NSEntityDescription+MagicalDataImport.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSEntityDescription+MagicalDataImport.m"; path = "MagicalRecord/Categories/DataImport/NSEntityDescription+MagicalDataImport.m"; sourceTree = "<group>"; };
@@ -600,8 +600,8 @@
 		70D22E7B24D2732DE60EBB5C2E3EBB5A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				731B780334E88A3206B61887584FA20C /* CoreDataExtensions.swift */,
-				83721EF7D488D7ADA631BB5FA73D1F61 /* CoreDataImporter.swift */,
+				731B780334E88A3206B61887584FA20C /* Extensions.swift */,
+				83721EF7D488D7ADA631BB5FA73D1F61 /* SwiftImport.swift */,
 				245CF8A04E38F2510CDC3156C36392A6 /* JSON.swift */,
 				0B158B030715536C7335F67270634844 /* Operators.swift */,
 				E820E23D643C5AFCBA903E77848E43B4 /* Optional.swift */,
@@ -1005,9 +1005,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				842183E41B92339500120D30 /* CoreDataImporter.swift in Sources */,
+				842183E41B92339500120D30 /* SwiftImport.swift in Sources */,
 				842183E61B92339500120D30 /* Operators.swift in Sources */,
-				842183E31B92339500120D30 /* CoreDataExtensions.swift in Sources */,
+				842183E31B92339500120D30 /* Extensions.swift in Sources */,
 				D0AAC76781EEB9B0AB9693793CB92506 /* Pods-SwiftImport_Tests-dummy.m in Sources */,
 				842183E51B92339500120D30 /* JSON.swift in Sources */,
 				842183E71B92339500120D30 /* Optional.swift in Sources */,
@@ -1065,8 +1065,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				753E756082A10D08038DBE8C408AC35B /* CoreDataExtensions.swift in Sources */,
-				50C98C84E28050AFC10A85B1349D5E89 /* CoreDataImporter.swift in Sources */,
+				753E756082A10D08038DBE8C408AC35B /* Extensions.swift in Sources */,
+				50C98C84E28050AFC10A85B1349D5E89 /* SwiftImport.swift in Sources */,
 				803116FA1F047DC9AC824E501B31A162 /* JSON.swift in Sources */,
 				B4CE8782EE4186C77BB8DE8C64242164 /* Operators.swift in Sources */,
 				2A3703809AE4D65D0BB53F45FF8EC07D /* Optional.swift in Sources */,
