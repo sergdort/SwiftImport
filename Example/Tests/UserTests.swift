@@ -21,7 +21,7 @@ func JSONFromFileName(name: String) -> JSON? {
 }
 
 class UserTests: QuickSpec {
-    
+   
    override func spec() {
       
       describe("User import") { () -> () in
@@ -30,10 +30,10 @@ class UserTests: QuickSpec {
             MagicalRecord.setDefaultModelFromClass(self.dynamicType)
             MagicalRecord.setupCoreDataStackWithInMemoryStore()
          })
-         
-         afterEach({ () -> () in
-            MagicalRecord.cleanUp()
-         })
+//         
+//         afterEach({ () -> () in
+//            MagicalRecord.cleanUp()
+//         })
          
          it("Should have context", closure: { () -> () in
             
@@ -47,7 +47,6 @@ class UserTests: QuickSpec {
                return
             }
             do {
-               
                if let users = try SwiftImport<User>.importObjects <^> json <*> NSManagedObjectContext.MR_defaultContext() {
                   
                   expect(users[0].userId).to(equal(1))
@@ -56,16 +55,14 @@ class UserTests: QuickSpec {
                   expect(users[0].homeCity).toNot(equal(nil))
                   expect(users[0].homeCity?.cityId).to(equal(1))
                   expect(users[0].homeCity?.name).to(equal("Winterfell"))
-                  
                   expect(users[0].createdEvents?.count).toNot(equal(0))
-                  
-                  print("User = \(users[0])")
                   
                   expect(users[1].userId).to(equal(2))
                   expect(users[1].name).to(equal("Tirion"))
                   expect(users[1].lastName).to(equal("Lannister"))
                   expect(users[1].homeCity?.cityId).to(equal(2))
                   expect(users[1].homeCity?.name).to(equal("Lannisport"))
+                  expect(users[0].createdEvents?.count).toNot(equal(0))
                   
                } else {
                   XCTAssert(false)

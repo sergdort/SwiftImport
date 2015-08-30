@@ -27,5 +27,5 @@ extension Event {
    override class func relatedJsonKey() -> String {
       return "id"
    }
-
+   
 }

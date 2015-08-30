@@ -9,18 +9,36 @@
 import Foundation
 import CoreData
 
+//MARK:Public
+
+extension NSManagedObject:JSONToEntityMapable {
+   
+   public class func mappedKeys() -> [String : String] {
+      return [:]
+   }
+   public class func relatedByAttribute() -> String {
+      return ""
+   }
+   public class func relatedJsonKey() -> String {
+      return ""
+   }
+   
+}
+
+//MARK:Private
+
 extension NSManagedObject {
-   class var cdi_entityName:String {
+   class var swi_entityName:String {
       return "\(self)"
    }
    
-   class func cdi_createEntityInContext(context:NSManagedObjectContext) -> NSManagedObject {
-      return NSEntityDescription.insertNewObjectForEntityForName(self.cdi_entityName, inManagedObjectContext: context)
+   class func swi_createEntityInContext(context:NSManagedObjectContext) -> NSManagedObject {
+      return NSEntityDescription.insertNewObjectForEntityForName(self.swi_entityName, inManagedObjectContext: context)
    }
    
-   class func cdi_findFirst(value:AnyObject, key:String, context:NSManagedObjectContext) -> NSManagedObject? {
+   class func swi_findFirst(value:AnyObject, key:String, context:NSManagedObjectContext) -> NSManagedObject? {
       let request = NSFetchRequest()
-      let entity = NSEntityDescription.entityForName(self.cdi_entityName, inManagedObjectContext: context)
+      let entity = NSEntityDescription.entityForName(self.swi_entityName, inManagedObjectContext: context)
       request.entity = entity
       if let str = value as? String {
          request.predicate = NSPredicate(format: "%K == %@", key, str)
@@ -36,31 +54,20 @@ extension NSManagedObject {
          return .None
       }
    }
-}
-
-extension NSManagedObject:JSONToEntityMapable {
-   public class func mappedKeys() -> [String : String] {
-      return [:]
-   }
-   public class func relatedByAttribute() -> String {
-      return ""
-   }
-   public class func relatedJsonKey() -> String {
-      return ""
-   }
+   
 }
 
 extension NSManagedObject {
    
-   func update(json:JSONDictionary) {
+   func swi_update(json:JSONDictionary) {
       for (jsonKey, mappedKey) in self.classForCoder.mappedKeys() {
-         self.updateValue <^> json[jsonKey] <*> mappedKey
+         self.swi_updateValue <^> json[jsonKey] <*> mappedKey
       }
    }
    
-   func updateValue(value:AnyObject)(key:String) {
+   func swi_updateValue(value:AnyObject)(key:String) {
       if let json = value as? JSONDictionary {
-         self.updateRelationship <^> json <*> key
+         self.swi_updateRelationship <^> json <*> key
       } else if let array = value as? [JSONDictionary] {
          self.updateRelationships <^> array <*> key
       } else {
@@ -68,7 +75,7 @@ extension NSManagedObject {
       }
    }
    
-   func updateRelationship(json:JSONDictionary)(key:String) {
+   func swi_updateRelationship(json:JSONDictionary)(key:String) {
       guard let relation = self.entity.relationshipsByName[key],
          let entity = relation.destinationEntity,
          let name = entity.managedObjectClassName,
@@ -80,11 +87,12 @@ extension NSManagedObject {
       if relation.toMany == true {
          return
       }
-      if let relationObj = clas.cdi_findFirst(value, key: clas.relatedByAttribute(), context: context) {
-         relationObj.update(json)
+      if let relationObj = clas.swi_findFirst(value, key: clas.relatedByAttribute(), context: context) {
+         relationObj.swi_update <<< json
+         self.setValue(relationObj, forKey: key)
       } else {
-         let relationObj = clas.cdi_createEntityInContext(context)
-         relationObj.update(json)
+         let relationObj = clas.swi_createEntityInContext(context)
+         relationObj.swi_update <<< json
          self.setValue(relationObj, forKey: key)
       }
    }
@@ -104,38 +112,37 @@ extension NSManagedObject {
             let context = self.managedObjectContext else {
                return
          }
-         if let relationObj = clas.cdi_findFirst(value, key: clas.relatedByAttribute(), context: context) {
-            let selector = Selector("add\(relation.name.capitalizedString)Object:")
-            relationObj.update(json)
+         if let relationObj = clas.swi_findFirst(value, key: clas.relatedByAttribute(), context: context) {
+            let selector = Selector("add\(relation.name.swi_capitalizedFirstCharacterString()!)Object:")
+            relationObj.swi_update <<< json
             if self.respondsToSelector(selector) {
                self.performSelector(selector, withObject: relationObj)
             }
-
          } else {
-            let relationObj = clas.cdi_createEntityInContext(context)
-            let selector = Selector("add\(relation.name.capitalizedString)Object:")
-            relationObj.update(json)
+            let relationObj = clas.swi_createEntityInContext(context)
+            let selector = Selector("add"+relation.name.swi_capitalizedFirstCharacterString()!+"Object:")
+            relationObj.swi_update <<< json
+
             if self.respondsToSelector(selector) {
                self.performSelector(selector, withObject: relationObj)
             }
          }
       }
    }
-
    
 }
 
 extension NSManagedObject {
-   class func importObject(json:JSONDictionary)(context:NSManagedObjectContext) throws -> NSManagedObject {
+   class func swi_importObject(json:JSONDictionary)(context:NSManagedObjectContext) throws -> NSManagedObject {
       guard let value = json[self.relatedJsonKey()] else  {
          throw ImportError.InvalidJSON
       }
-      if let obj = self.cdi_findFirst(value, key: self.relatedByAttribute(), context: context) {
-         obj.update(json)
+      if let obj = self.swi_findFirst(value, key: self.relatedByAttribute(), context: context) {
+         obj.swi_update <<< json
          return obj
       } else {
-         let obj = self.cdi_createEntityInContext(context)
-         obj.update(json)
+         let obj = self.swi_createEntityInContext(context)
+         obj.swi_update <<< json
          return obj
       }
    }
@@ -150,15 +157,5 @@ extension String {
          return nil
       }
    }
-//   - (NSString *) MR_capitalizedFirstCharacterString;
-//   {
-//   if ([self length] > 0)
-//   {
-//   NSString *firstChar = [[self substringToIndex:1] capitalizedString];
-//   return [firstChar stringByAppendingString:[self substringFromIndex:1]];
-//   }
-//   return self;
-//   }
-
 }
 

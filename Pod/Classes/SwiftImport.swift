@@ -25,7 +25,7 @@ public class SwiftImport<Element:NSManagedObject> {
       guard let _ = dict[Element.relatedJsonKey()] else {
          throw ImportError.InvalidJSON
       }
-      return (Element.importObject <^> dict <*> context) as! Element
+      return (Element.swi_importObject <^> dict <*> context) as! Element
    }
    
    public class func importObjects(array:[JSONDictionary])(context:NSManagedObjectContext) throws -> [Element] {
