@@ -12,6 +12,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ## Requirements
 
 ## Usage
+```swift
+import SwiftImport
 
 extension User {
 
@@ -55,6 +57,8 @@ do {
 } catch {
 	handle error
 }
+
+```
 
 ## Installation (Not yet published)
 
