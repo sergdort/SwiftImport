@@ -11,6 +11,51 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
+## Usage
+
+extension User {
+
+    @NSManaged var lastName: String?
+    @NSManaged var name: String?
+    @NSManaged var userId: NSNumber?
+    @NSManaged var createdEvents: NSSet?
+    @NSManaged var homeCity: City?
+
+}
+
+extension User { //Extend JSONToEntityMapable protocol
+   override class func mappedKeys() -> [String : String] { // ["jsonKey" : "mappedKey"]
+      return [ "id" : "userId", "name" : "name", "last_name" : "lastName", "home_city" : "homeCity", "events" : "createdEvents"]
+   }
+
+   override class func relatedByAttribute() -> String {// The unique key of object
+      return "userId"
+   }
+   
+   override class func relatedJsonKey() -> String {// The unique key of object in json
+      return "id"
+   }
+   
+}
+
+...
+
+do {
+	 let users = try SwiftImport<User>.importObjects <^> json <*> context 
+} catch {
+	//handle error here (ImportError.InvalidJSON)
+}
+
+...
+
+or if u prefer normal  sintax ;)
+
+do {
+    let users = try SwiftImport<User>.importObjects(json)(context: context)
+} catch {
+	handle error
+}
+
 ## Installation (Not yet published)
 
 SwiftImport is available through [CocoaPods](http://cocoapods.org). To install
