@@ -10,18 +10,18 @@ extension Optional {
    func apply<U>(f: (Wrapped -> U)?) -> U? {
       return f.flatMap { self.map($0) }
    }
-   func apply<U>(f:(Wrapped throws -> U)?) -> U? {
+   func apply<U>(f:(Wrapped throws -> U)?) throws -> U? {
       do {
          return try f.flatMap {
             do {
                return try self.map($0)
             } catch {
-               return .None
+               throw error
             }
             
          }
       } catch {
-         return .None
+         throw error
       }
    }
 }

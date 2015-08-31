@@ -31,11 +31,11 @@ public func <*><T, U>(f: (T -> U)?, a: T?) -> U? {
    return a.apply(f)
 }
 
-public func <*><T, U>(f: (T throws -> U)?, a:T?) -> U? {
+public func <*><T, U>(f: (T throws -> U)?, a:T?) throws -> U? {
    do {
       return try a.apply(f)
    } catch {
-      return .None
+      throw error
    }
 }
 
@@ -43,11 +43,11 @@ public func >>-<T, U>(a: T?, f: T -> U?) -> U? {
    return a.flatMap(f)
 }
 
-public func >>-<T, U>(a:T?, f: T throws -> U?) -> U? {
+public func >>-<T, U>(a:T?, f: T throws -> U?) throws -> U? {
    do {
       return try a.flatMap(f)
    } catch {
-      return .None
+      throw error
    }
 }
 
@@ -55,11 +55,11 @@ public func -<<<T, U>(f: T -> U?, a: T?) -> U? {
    return a.flatMap(f)
 }
 
-public func -<<<T, U>(f:T throws -> U?, a: T?) -> U? {
+public func -<<<T, U>(f:T throws -> U?, a: T?) throws -> U? {
    do {
       return try a.flatMap(f)
    } catch {
-      return .None
+      throw error
    }
 }
 
@@ -67,11 +67,11 @@ public func <<< <T, U>(f: T -> U, a: T) -> U {
    return f(a)
 }
 
-public func <<< <T, U>(f: T throws -> U, a: T) -> U? {
+public func <<< <T, U>(f: T throws -> U, a: T) throws -> U? {
    do {
       return try f(a)
    } catch {
-      return .None
+      throw error
    }
 }
 
