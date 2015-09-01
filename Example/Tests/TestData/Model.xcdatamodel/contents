@@ -11,6 +11,7 @@
         <attribute name="locationName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="createdEvents" inverseEntity="User" syncable="YES"/>
+        <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="participantEvents" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName=".User" syncable="YES">
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
@@ -18,10 +19,11 @@
         <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="createdEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="creator" inverseEntity="Event" syncable="YES"/>
         <relationship name="homeCity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="City" inverseName="people" inverseEntity="City" syncable="YES"/>
+        <relationship name="participantEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="participants" inverseEntity="Event" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Event" positionX="-45" positionY="27" width="128" height="120"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="City" positionX="-54" positionY="54" width="128" height="90"/>
+        <element name="Event" positionX="-45" positionY="27" width="128" height="135"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="135"/>
     </elements>
 </model>

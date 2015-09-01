@@ -2,7 +2,7 @@
 //  User+CoreDataProperties.swift
 //  SwiftImport
 //
-//  Created by Segii Shulga on 8/30/15.
+//  Created by Segii Shulga on 9/1/15.
 //  Copyright © 2015 CocoaPods. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -19,5 +19,6 @@ extension User {
     @NSManaged var userId: NSNumber?
     @NSManaged var createdEvents: NSSet?
     @NSManaged var homeCity: City?
+    @NSManaged var participantEvents: NSSet?
 
 }

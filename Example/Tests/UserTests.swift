@@ -30,10 +30,10 @@ class UserTests: QuickSpec {
             MagicalRecord.setDefaultModelFromClass(self.dynamicType)
             MagicalRecord.setupCoreDataStackWithInMemoryStore()
          })
-//         
-//         afterEach({ () -> () in
-//            MagicalRecord.cleanUp()
-//         })
+         
+         afterEach({ () -> () in
+            MagicalRecord.cleanUp()
+         })
          
          it("Should have context", closure: { () -> () in
             
@@ -42,17 +42,13 @@ class UserTests: QuickSpec {
          })
          
          it("should import Users", closure: { () -> () in
-            guard let json = JSONFromFileName -<< "Users" as? [JSONDictionary] else {
-               XCTAssert(false)
-               return
-            }
             do {
-               if let users = try SwiftImport<User>.importObjects <^> json <*> NSManagedObjectContext.MR_defaultContext() {
+               if let users = try SwiftImport<User>.importObjects <^> JSONObjects -<< JSONFromFileName -<< "Users" <*> NSManagedObjectContext.MR_defaultContext() {
                   
                   expect(users[0].userId).to(equal(1))
                   expect(users[0].name).to(equal("John"))
                   expect(users[0].lastName).to(equal("Snow"))
-                  expect(users[0].homeCity).toNot(equal(nil))
+                  expect(users[0].homeCity).toNot(beNil())
                   expect(users[0].homeCity?.cityId).to(equal(1))
                   expect(users[0].homeCity?.name).to(equal("Winterfell"))
                   expect(users[0].createdEvents?.count).toNot(equal(0))
@@ -73,13 +69,35 @@ class UserTests: QuickSpec {
             }
          })
          
-         it("should throw error", closure: { () -> () in
-            guard let json = JSONFromFileName -<< "WrongUser" as? [JSONDictionary] else {
-               XCTAssert(false)
+         it("should create user", closure: { () -> () in
+            do {
+               let user = try SwiftImport<User>.importObject <^> JSONObject -<< JSONFromFileName -<< "User" <*> NSManagedObjectContext.MR_defaultContext()
+               print(user)
+               let event = user?.createdEvents?.anyObject() as? Event
+               let partisipant = event?.participants?.anyObject() as? User
+               let partisipantCreatedEvent = partisipant?.createdEvents?.anyObject() as? Event
+               
+               expect(event).toNot(beNil())
+               expect(partisipant).toNot(beNil())
+               
+               expect(partisipant?.userId).to(equal(2))
+               expect(partisipant?.name).to(equal("Tirion"))
+               expect(partisipant?.homeCity?.cityId).to(equal(2))
+               expect(partisipant?.homeCity?.name).to(equal("Lannisport"))
+               
+               expect(partisipantCreatedEvent?.eventId).to(equal(3))
+               expect(partisipantCreatedEvent?.name).to(equal("Cool event"))
+               expect(partisipantCreatedEvent?.locationName).to(equal("Cool location"))
+               
+            } catch {
+               XCTAssert(false, "\(error)")
                return
             }
+         })
+         
+         it("should throw error", closure: { () -> () in
             do {
-               _ = try SwiftImport<User>.importObjects(json)(context: NSManagedObjectContext.MR_defaultContext())
+               _ = try SwiftImport<User>.importObjects <^> JSONObjects -<< JSONFromFileName -<< "WrongUser" <*> NSManagedObjectContext.MR_defaultContext()
                XCTAssert(false)
             } catch {
                XCTAssert(true)

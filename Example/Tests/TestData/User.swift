@@ -16,8 +16,8 @@ class User: NSManagedObject {
 }
 
 extension User {
-   override class func mappedKeys() -> [String : String] {
-      return [ "id" : "userId", "name" : "name", "last_name" : "lastName", "home_city" : "homeCity", "events" : "createdEvents"]
+   override class func mapped() -> [String : String] {
+      return [ "userId" : "id", "lastName" : "last_name", "homeCity" : "home_city", "createdEvents" : "events"]
    }
 
    override class func relatedByAttribute() -> String {

@@ -14,7 +14,7 @@ enum ImportError:ErrorType {
 }
 
 public protocol JSONToEntityMapable {
-   static func mappedKeys() -> [String:String]
+   static func mapped() -> [String:String] //[entityKey : jsonKey]
    static func relatedByAttribute() -> String
    static func relatedJsonKey() -> String
 }

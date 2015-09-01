@@ -16,8 +16,8 @@ class City: NSManagedObject {
 }
 
 extension City {
-   override class func mappedKeys() -> [String : String] {
-      return [ "id" : "cityId", "name" : "name"]
+   override class func mapped() -> [String : String] {
+      return [ "cityId" : "id"]
    }
    
    override class func relatedByAttribute() -> String {

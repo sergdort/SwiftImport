@@ -13,7 +13,7 @@ import CoreData
 
 extension NSManagedObject:JSONToEntityMapable {
    
-   public class func mappedKeys() -> [String : String] {
+   public class func mapped() -> [String : String] {
       return [:]
    }
    public class func relatedByAttribute() -> String {
@@ -59,20 +59,35 @@ extension NSManagedObject {
 
 extension NSManagedObject {
    
-   func swi_update(json:JSONDictionary) {
-      for (jsonKey, mappedKey) in self.classForCoder.mappedKeys() {
-         self.swi_updateValue <^> json[jsonKey] <*> mappedKey
+   func setValue(value:AnyObject)(key:String) {
+      self.setValue(value, forKey: key)
+   }
+   
+   func swi_updateProperties(json:JSONDictionary) {
+      for (name, _) in self.entity.attributesByName {
+         if let mapped = self.classForCoder.mapped()[name] {
+            setValue <^> json[mapped] <*> name
+         } else {
+            setValue <^> json[name] <*> name
+         }
       }
    }
    
-   func swi_updateValue(value:AnyObject)(key:String) {
-      if let json = value as? JSONDictionary {
-         self.swi_updateRelationship <^> json <*> key
-      } else if let array = value as? [JSONDictionary] {
-         self.updateRelationships <^> array <*> key
-      } else {
-         self.setValue(value, forKey: key)
+   func swi_updateRelation(json:JSONDictionary) {
+      for (name, _) in self.entity.relationshipsByName {
+         if let mapped = self.classForCoder.mapped()[name] {
+            swi_updateRelationship <^> json[mapped] >>- JSONObject <*> name
+            swi_updateRelationships <^> json[mapped] >>- JSONObjects <*> name
+         } else {
+            swi_updateRelationship <^> json[name] >>- JSONObject <*> name
+            swi_updateRelationships <^> json[name] >>- JSONObjects <*> name
+         }
       }
+   }
+   
+   func swi_updateWith(json:JSONDictionary) {
+      swi_updateProperties <^> json
+      swi_updateRelation <^> json
    }
    
    func swi_updateRelationship(json:JSONDictionary)(key:String) {
@@ -88,16 +103,16 @@ extension NSManagedObject {
          return
       }
       if let relationObj = clas.swi_findFirst(value, key: clas.relatedByAttribute(), context: context) {
-         relationObj.swi_update <<< json
+         relationObj.swi_updateWith <<< json
          self.setValue(relationObj, forKey: key)
       } else {
          let relationObj = clas.swi_createEntityInContext(context)
-         relationObj.swi_update <<< json
+         relationObj.swi_updateWith <<< json
          self.setValue(relationObj, forKey: key)
       }
    }
    
-   func updateRelationships(array:[JSONDictionary])(key:String) {
+   func swi_updateRelationships(array:[JSONDictionary])(key:String) {
       guard let relation = self.entity.relationshipsByName[key],
          let entity = relation.destinationEntity,
          let name = entity.managedObjectClassName,
@@ -114,14 +129,14 @@ extension NSManagedObject {
          }
          if let relationObj = clas.swi_findFirst(value, key: clas.relatedByAttribute(), context: context) {
             let selector = Selector("add\(relation.name.swi_capitalizedFirstCharacterString()!)Object:")
-            relationObj.swi_update <<< json
+            relationObj.swi_updateWith <<< json
             if self.respondsToSelector(selector) {
                self.performSelector(selector, withObject: relationObj)
             }
          } else {
             let relationObj = clas.swi_createEntityInContext(context)
             let selector = Selector("add"+relation.name.swi_capitalizedFirstCharacterString()!+"Object:")
-            relationObj.swi_update <<< json
+            relationObj.swi_updateWith <<< json
 
             if self.respondsToSelector(selector) {
                self.performSelector(selector, withObject: relationObj)
@@ -138,11 +153,11 @@ extension NSManagedObject {
          throw ImportError.InvalidJSON
       }
       if let obj = self.swi_findFirst(value, key: self.relatedByAttribute(), context: context) {
-         obj.swi_update <<< json
+         obj.swi_updateWith <<< json
          return obj
       } else {
          let obj = self.swi_createEntityInContext(context)
-         obj.swi_update <<< json
+         obj.swi_updateWith <<< json
          return obj
       }
    }

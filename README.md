@@ -22,16 +22,16 @@ extension User {
 
 }
 
-extension User { //Extend JSONToEntityMapable protocol
-   override class func mappedKeys() -> [String : String] { // ["jsonKey" : "mappedKey"]
-      return [ "id" : "userId", "name" : "name", "last_name" : "lastName", "home_city" : "homeCity", "events" : "createdEvents"]
+extension User {
+   override class func mapped() -> [String : String] {
+      return [ "userId" : "id", "lastName" : "last_name", "homeCity" : "home_city", "createdEvents" : "events"]
    }
 
-   override class func relatedByAttribute() -> String {// The unique key of object
+   override class func relatedByAttribute() -> String {
       return "userId"
    }
    
-   override class func relatedJsonKey() -> String {// The unique key of object in json
+   override class func relatedJsonKey() -> String {
       return "id"
    }
    
@@ -40,7 +40,9 @@ extension User { //Extend JSONToEntityMapable protocol
 ...
 
 do {
-	 let users = try SwiftImport<User>.importObjects <^> json <*> context 
+
+    let data = //...data from responce or something else
+    let user = try SwiftImport<User>.importObject <^> JSONObject -<< JSONObjectWithData -<< data <*> context
 } catch {
 	//handle error here (ImportError.InvalidJSON)
 }

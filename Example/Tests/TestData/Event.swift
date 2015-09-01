@@ -16,8 +16,8 @@ class Event: NSManagedObject {
 }
 
 extension Event {
-   override class func mappedKeys() -> [String : String] {
-      return [ "id" : "eventId", "name" : "name", "location_name" : "locationName", "address" : "address"]
+   override class func mapped() -> [String : String] {
+      return [ "eventId" : "id", "locationName" : "location_name"]
    }
    
    override class func relatedByAttribute() -> String {

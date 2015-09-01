@@ -2,7 +2,7 @@
 //  Event+CoreDataProperties.swift
 //  SwiftImport
 //
-//  Created by Segii Shulga on 8/30/15.
+//  Created by Segii Shulga on 9/1/15.
 //  Copyright © 2015 CocoaPods. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -19,5 +19,6 @@ extension Event {
     @NSManaged var locationName: String?
     @NSManaged var name: String?
     @NSManaged var creator: User?
+    @NSManaged var participants: NSSet?
 
 }
