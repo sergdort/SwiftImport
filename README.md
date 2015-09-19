@@ -1,6 +1,6 @@
 # SwiftImport
 
-[![CI Status](http://img.shields.io/travis/sshulga/SwiftImport.svg?style=flat)](https://travis-ci.org/sshulga/SwiftImport)
+[![CI Status](http://img.shields.io/travis/sshulga/SwiftImport.svg?style=flat)](https://travis-ci.org/sergdort/SwiftImport)
 [![Version](https://img.shields.io/cocoapods/v/SwiftImport.svg?style=flat)](http://cocoapods.org/pods/SwiftImport)
 [![License](https://img.shields.io/cocoapods/l/SwiftImport.svg?style=flat)](http://cocoapods.org/pods/SwiftImport)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftImport.svg?style=flat)](http://cocoapods.org/pods/SwiftImport)
