@@ -103,6 +103,18 @@ class UserTests: QuickSpec {
                XCTAssert(true)
             }
          })
+         
+         it("should not import user", closure: { () -> () in
+            
+            do {
+               _ = try SwiftImport<User>.importObject <^> JSONObject -<< JSONFromFileName -<< "Event" <*> NSManagedObjectContext.MR_defaultContext()
+               XCTAssert(false, "Should throw error")
+            } catch {
+               XCTAssert(true)
+            }
+            
+         })
+
       
       }
    
