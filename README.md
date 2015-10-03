@@ -59,7 +59,7 @@ do {
 
 ```
 
-## Installation (Not yet published)
+## Installation
 
 SwiftImport is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
@@ -67,6 +67,10 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod "SwiftImport"
 ```
+
+## TODO
+
+- Use [Runes](https://github.com/thoughtbot/runes) 
 
 ## Author
 
