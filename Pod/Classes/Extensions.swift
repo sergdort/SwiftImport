@@ -50,7 +50,7 @@ extension NSManagedObject {
          let data = try context.executeFetchRequest(request)
          return data.first as? NSManagedObject
       } catch {
-         print("NSManagedObject dte_findFirst ERROR:\(error)")
+         print("NSManagedObject swi_findFirst ERROR:\(error)")
          return .None
       }
    }
