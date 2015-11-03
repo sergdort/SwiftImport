@@ -43,8 +43,19 @@ extension NSArray : NMBStringer {
 internal func stringify<T>(value: T) -> String {
     if let value = value as? Double {
         return NSString(format: "%.4f", (value)).description
+    } else if let value = value as? ErrorType {
+        return "\(value._domain).\(value)"
     }
     return String(value)
+}
+
+internal func stringify(value: NMBDoubleConvertible) -> String {
+    if let value = value as? Double {
+        return NSString(format: "%.4f", (value)).description
+    } else if let value = value as? ErrorType {
+        return "\(value._domain).\(value)"
+    }
+    return value.stringRepresentation
 }
 
 internal func stringify<T>(value: T?) -> String {
