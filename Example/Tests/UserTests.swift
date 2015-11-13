@@ -43,7 +43,7 @@ class UserTests: QuickSpec {
          
          it("should import Users", closure: { () -> () in
             do {
-               if let users = try SwiftImport<User>.importObjects <^> JSONObjects -<< JSONFromFileName -<< "Users" <*> NSManagedObjectContext.MR_defaultContext() {
+               if let users = try SwiftImport<User>.importObjects <^> NSManagedObjectContext.MR_defaultContext() <*> JSONObjects -<< JSONFromFileName -<< "Users"  {
                   
                   expect(users[0].userId).to(equal(1))
                   expect(users[0].name).to(equal("John"))
@@ -71,8 +71,7 @@ class UserTests: QuickSpec {
          
          it("should create user", closure: { () -> () in
             do {
-               let user = try SwiftImport<User>.importObject <^> JSONObject -<< JSONFromFileName -<< "User" <*> NSManagedObjectContext.MR_defaultContext()
-               print(user)
+               let user = try SwiftImport<User>.importObject <^> NSManagedObjectContext.MR_defaultContext() <*> JSONObject -<< JSONFromFileName -<< "User"
                let event = user?.createdEvents?.anyObject() as? Event
                let partisipant = event?.participants?.anyObject() as? User
                let partisipantCreatedEvent = partisipant?.createdEvents?.anyObject() as? Event
@@ -97,7 +96,7 @@ class UserTests: QuickSpec {
          
          it("should throw error", closure: { () -> () in
             do {
-               _ = try SwiftImport<User>.importObjects <^> JSONObjects -<< JSONFromFileName -<< "WrongUser" <*> NSManagedObjectContext.MR_defaultContext()
+               _ = try SwiftImport<User>.importObjects <^> NSManagedObjectContext.MR_defaultContext() <*> JSONObjects -<< JSONFromFileName -<< "WrongUser"
                XCTAssert(false)
             } catch {
                XCTAssert(true)
@@ -107,7 +106,7 @@ class UserTests: QuickSpec {
          it("should not import user", closure: { () -> () in
             
             do {
-               _ = try SwiftImport<User>.importObject <^> JSONObject -<< JSONFromFileName -<< "Event" <*> NSManagedObjectContext.MR_defaultContext()
+               _ = try SwiftImport<User>.importObject <^> NSManagedObjectContext.MR_defaultContext() <*> JSONObject -<< JSONFromFileName -<< "Event"
                XCTAssert(false, "Should throw error")
             } catch {
                XCTAssert(true)

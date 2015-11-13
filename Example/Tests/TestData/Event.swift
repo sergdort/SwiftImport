@@ -20,11 +20,11 @@ extension Event {
       return [ "eventId" : "id", "locationName" : "location_name"]
    }
    
-   override class func relatedByAttribute() -> String {
+   override class var relatedByAttribute: String {
       return "eventId"
    }
    
-   override class func relatedJsonKey() -> String {
+   override class var relatedJsonKey: String {
       return "id"
    }
    
