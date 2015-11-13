@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '86A2EA2DF69EF9AFF7833132'
+               BlueprintIdentifier = '18FCDD5DF0BA95941EDEDC4A'
                BlueprintName = 'SwiftImport'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'SwiftImport.framework'>

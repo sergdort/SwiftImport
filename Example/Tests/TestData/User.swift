@@ -20,11 +20,11 @@ extension User {
       return [ "userId" : "id", "lastName" : "last_name", "homeCity" : "home_city", "createdEvents" : "events"]
    }
 
-   override class func relatedByAttribute() -> String {
+   override class var relatedByAttribute: String {
       return "userId"
    }
    
-   override class func relatedJsonKey() -> String {
+   override class var relatedJsonKey: String {
       return "id"
    }
    

@@ -16,10 +16,10 @@ extension NSManagedObject:JSONToEntityMapable {
    public class func mapped() -> [String : String] {
       return [:]
    }
-   public class func relatedByAttribute() -> String {
+   public class var relatedByAttribute:String {
       return ""
    }
-   public class func relatedJsonKey() -> String {
+   public class var relatedJsonKey:String {
       return ""
    }
    
@@ -55,15 +55,23 @@ extension NSManagedObject {
       }
    }
    
+   class func swi_ifFindFirst(key:String, value:AnyObject , context:NSManagedObjectContext, elseThen: NSManagedObjectContext -> NSManagedObject ) -> NSManagedObject {
+      if let first = swi_findFirst(value, key: key, context: context) {
+         return first
+      } else {
+         return elseThen(context)
+      }
+   }
+   
 }
 
 extension NSManagedObject {
    
-   func setValue(value:AnyObject)(key:String) {
+   private func setValue(value:AnyObject)(key:String) {
       self.setValue(value, forKey: key)
    }
    
-   func swi_updateProperties(json:JSONDictionary) {
+   private func swi_updateProperties(json:JSONDictionary) -> NSManagedObject {
       for (name, _) in self.entity.attributesByName {
          if let mapped = self.classForCoder.mapped()[name] {
             setValue <^> json[mapped] <*> name
@@ -71,9 +79,10 @@ extension NSManagedObject {
             setValue <^> json[name] <*> name
          }
       }
+      return self
    }
    
-   func swi_updateRelation(json:JSONDictionary) {
+   private func swi_updateRelation(json:JSONDictionary) {
       for (name, _) in self.entity.relationshipsByName {
          if let mapped = self.classForCoder.mapped()[name] {
             swi_updateRelationship <^> json[mapped] >>- JSONObject <*> name
@@ -85,9 +94,10 @@ extension NSManagedObject {
       }
    }
    
-   func swi_updateWith(json:JSONDictionary) {
+   func swi_updateWith(json:JSONDictionary) -> NSManagedObject {
       swi_updateProperties <^> json
       swi_updateRelation <^> json
+      return self
    }
    
    func swi_updateRelationship(json:JSONDictionary)(key:String) {
@@ -95,21 +105,19 @@ extension NSManagedObject {
          let entity = relation.destinationEntity,
          let name = entity.managedObjectClassName,
          let clas = NSClassFromString(name) as? NSManagedObject.Type,
-         let value = json[clas.relatedJsonKey()],
+         let value = json[clas.relatedJsonKey],
          let context = self.managedObjectContext else {
             return;
       }
       if relation.toMany == true {
          return
       }
-      if let relationObj = clas.swi_findFirst(value, key: clas.relatedByAttribute(), context: context) {
-         relationObj.swi_updateWith <<< json
-         self.setValue(relationObj, forKey: key)
-      } else {
-         let relationObj = clas.swi_createEntityInContext(context)
-         relationObj.swi_updateWith <<< json
-         self.setValue(relationObj, forKey: key)
-      }
+      let obj = clas.swi_ifFindFirst(clas.relatedByAttribute,
+         value: value,
+         context: context,
+         elseThen: clas.swi_createEntityInContext)
+         .swi_updateWith(json)
+      self.setValue(obj, forKey: key)
    }
    
    func swi_updateRelationships(array:[JSONDictionary])(key:String) {
@@ -123,24 +131,19 @@ extension NSManagedObject {
          return
       }
       for json in array {
-         guard let value = json[clas.relatedJsonKey()],
+         guard let value = json[clas.relatedJsonKey],
             let context = self.managedObjectContext else {
                return
          }
-         if let relationObj = clas.swi_findFirst(value, key: clas.relatedByAttribute(), context: context) {
-            let selector = Selector("add\(relation.name.swi_capitalizedFirstCharacterString()!)Object:")
-            relationObj.swi_updateWith <<< json
-            if self.respondsToSelector(selector) {
-               self.performSelector(selector, withObject: relationObj)
-            }
-         } else {
-            let relationObj = clas.swi_createEntityInContext(context)
-            let selector = Selector("add"+relation.name.swi_capitalizedFirstCharacterString()!+"Object:")
-            relationObj.swi_updateWith <<< json
-
-            if self.respondsToSelector(selector) {
-               self.performSelector(selector, withObject: relationObj)
-            }
+         
+         let obj = clas.swi_ifFindFirst(clas.relatedByAttribute,
+            value: value,
+            context: context,
+            elseThen: clas.swi_createEntityInContext)
+            .swi_updateWith(json)
+         let selector = Selector("add\(relation.name.swi_capitalizedFirstCharacterString()!)Object:")
+         if self.respondsToSelector(selector) {
+            self.performSelector(selector, withObject: obj)
          }
       }
    }
@@ -149,17 +152,15 @@ extension NSManagedObject {
 
 extension NSManagedObject {
    class func swi_importObject(json:JSONDictionary)(context:NSManagedObjectContext) throws -> NSManagedObject {
-      guard let value = json[self.relatedJsonKey()] else  {
+      guard let value = json[self.relatedJsonKey] else  {
          throw ImportError.InvalidJSON
       }
-      if let obj = self.swi_findFirst(value, key: self.relatedByAttribute(), context: context) {
-         obj.swi_updateWith <<< json
-         return obj
-      } else {
-         let obj = self.swi_createEntityInContext(context)
-         obj.swi_updateWith <<< json
-         return obj
-      }
+      
+      return swi_ifFindFirst(relatedByAttribute,
+                                   value: value,
+                                 context: context,
+                                elseThen: swi_createEntityInContext)
+         .swi_updateWith(json)
    }
 }
 
@@ -173,4 +174,6 @@ extension String {
       }
    }
 }
+
+
 

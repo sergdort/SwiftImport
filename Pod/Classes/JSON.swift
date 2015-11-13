@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 public typealias JSON = AnyObject
 public typealias JSONDictionary = Dictionary<String, JSON>

@@ -20,11 +20,11 @@ extension City {
       return [ "cityId" : "id"]
    }
    
-   override class func relatedByAttribute() -> String {
+   override class var relatedByAttribute: String {
       return "cityId"
    }
    
-   override class func relatedJsonKey() -> String {
+   override class var relatedJsonKey: String {
       return "id"
    }
 }
