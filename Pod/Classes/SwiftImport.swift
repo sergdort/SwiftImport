@@ -19,22 +19,22 @@ public protocol JSONToEntityMapable {
    static var relatedJsonKey:String {get}
 }
 
-public protocol Importable {
-   static func importIn(contex:NSManagedObjectContext)(json:AnyObject) -> Importable
-}
-
 public class SwiftImport<Element:NSManagedObject> {
    
-   public class func importObject(context:NSManagedObjectContext)(dict:JSONDictionary) throws  -> Element {
-      do {
-         return try Element.swi_importObject(dict)(context: context) as! Element
-      } catch {
-         throw error
+   public class func importObject(context:NSManagedObjectContext) -> (dict:JSONDictionary) throws -> Element {
+      return { dict in
+         do {
+            return try Element.swi_importObject(dict)(context) as! Element
+         } catch {
+            throw error
+         }
       }
    }
    
-   public class func importObjects(context:NSManagedObjectContext)(array:[JSONDictionary]) throws -> [Element] {
-      return try array.map(importObject(context))
+   public class func importObjects(context:NSManagedObjectContext) -> (array:[JSONDictionary]) throws -> [Element] {
+      return { array in
+         return try array.map(importObject(context))
+      }
    }
 }
 

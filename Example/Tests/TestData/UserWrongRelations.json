@@ -1,0 +1,23 @@
+{
+   "id" : 1,
+   "name" : "John",
+   "last_name" : "Snow",
+   "home_city" : {"id":1, "name" : "Winterfell"},
+   "events" : {"id" : 1, "name" : "Cool event",
+               "location_name" : "Cool location",
+               "participants" : [{
+                                 "id" : 2,
+                                 "name" : "Tirion",
+                                 "last_name" : "Lannister",
+                                 "home_city" : {"id":2,
+                                                "name" : "Lannisport"},
+                                 "events" : [{
+                                             "id" : 3,
+                                             "name" : "Cool event",
+                                             "location_name" :
+                                             "Cool location"}]
+                                 
+                                 }
+                                 ]
+               }
+}

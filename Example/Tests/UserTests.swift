@@ -113,6 +113,17 @@ class UserTests: QuickSpec {
             }
             
          })
+         
+         it("should not have events", closure: { () -> () in
+            do {
+               let user = try SwiftImport<User>.importObject <^> NSManagedObjectContext.MR_defaultContext() <*> JSONObject -<< JSONFromFileName -<< "UserWrongRelations"
+               
+               expect(user?.createdEvents?.count).to(equal(0))
+               
+            } catch {
+               XCTAssert(false)
+            }
+         })
 
       
       }

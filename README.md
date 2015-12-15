@@ -23,7 +23,7 @@ extension User {
 }
 
 extension User {
-   override class func mapped() -> [String : String] {
+   override class func mapped() -> [String : String] { // if keys are the same dont need to provide map
       return [ "userId" : "id", "lastName" : "last_name", "homeCity" : "home_city", "createdEvents" : "events"]
    }
 

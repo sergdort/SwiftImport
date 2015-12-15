@@ -33,12 +33,12 @@ extension NSManagedObject {
    }
    
    class func swi_createEntityInContext(context:NSManagedObjectContext) -> NSManagedObject {
-      return NSEntityDescription.insertNewObjectForEntityForName(self.swi_entityName, inManagedObjectContext: context)
+      return NSEntityDescription.insertNewObjectForEntityForName(swi_entityName, inManagedObjectContext: context)
    }
    
    class func swi_findFirst(value:AnyObject, key:String, context:NSManagedObjectContext) -> NSManagedObject? {
       let request = NSFetchRequest()
-      let entity = NSEntityDescription.entityForName(self.swi_entityName, inManagedObjectContext: context)
+      let entity = NSEntityDescription.entityForName(swi_entityName, inManagedObjectContext: context)
       request.entity = entity
       if let str = value as? String {
          request.predicate = NSPredicate(format: "%K == %@", key, str)
@@ -67,8 +67,10 @@ extension NSManagedObject {
 
 extension NSManagedObject {
    
-   private func setValue(value:AnyObject)(key:String) {
-      self.setValue(value, forKey: key)
+   private func setValue(value:AnyObject) -> (key:String) -> Void {
+      return { key in
+         self.setValue(value, forKey: key)
+      }
    }
    
    private func swi_updateProperties(json:JSONDictionary) -> NSManagedObject {
@@ -100,36 +102,37 @@ extension NSManagedObject {
       return self
    }
    
-   func swi_updateRelationship(json:JSONDictionary)(key:String) {
-      guard let relation = self.entity.relationshipsByName[key],
-         let entity = relation.destinationEntity,
-         let name = entity.managedObjectClassName,
-         let clas = NSClassFromString(name) as? NSManagedObject.Type,
-         let value = json[clas.relatedJsonKey],
-         let context = self.managedObjectContext else {
-            return;
+   func swi_updateRelationship(json:JSONDictionary) -> (key:String) -> Void {
+      return { key in
+         guard let relation = self.entity.relationshipsByName[key],
+            let entity = relation.destinationEntity,
+            let name = entity.managedObjectClassName,
+            let clas = NSClassFromString(name) as? NSManagedObject.Type,
+            let value = json[clas.relatedJsonKey],
+            let context = self.managedObjectContext else {
+               return;
+         }
+         if relation.toMany == true {
+            return
+         }
+         let obj = clas.swi_ifFindFirst(clas.relatedByAttribute,
+            value: value,
+            context: context,
+            elseThen: clas.swi_createEntityInContext)
+            .swi_updateWith(json)
+         self.setValue(obj, forKey: key)
       }
-      if relation.toMany == true {
-         return
-      }
-      let obj = clas.swi_ifFindFirst(clas.relatedByAttribute,
-         value: value,
-         context: context,
-         elseThen: clas.swi_createEntityInContext)
-         .swi_updateWith(json)
-      self.setValue(obj, forKey: key)
    }
    
    func swi_updateRelationships(array:[JSONDictionary])(key:String) {
       guard let relation = self.entity.relationshipsByName[key],
-         let entity = relation.destinationEntity,
-         let name = entity.managedObjectClassName,
-         let clas = NSClassFromString(name) as? NSManagedObject.Type else {
+         entity = relation.destinationEntity,
+         name = entity.managedObjectClassName,
+         clas = NSClassFromString(name) as? NSManagedObject.Type
+         where relation.toMany else {
             return;
       }
-      if relation.toMany == false {
-         return
-      }
+
       for json in array {
          guard let value = json[clas.relatedJsonKey],
             let context = self.managedObjectContext else {
@@ -151,17 +154,21 @@ extension NSManagedObject {
 }
 
 extension NSManagedObject {
-   class func swi_importObject(json:JSONDictionary)(context:NSManagedObjectContext) throws -> NSManagedObject {
-      guard let value = json[self.relatedJsonKey] else  {
-         throw ImportError.InvalidJSON
+   
+   class func swi_importObject(json:JSONDictionary) -> NSManagedObjectContext throws -> NSManagedObject {
+      return { (context:NSManagedObjectContext) in
+         guard let value = json[self.relatedJsonKey] else  {
+            throw ImportError.InvalidJSON
+         }
+         
+         return swi_ifFindFirst(relatedByAttribute,
+            value: value,
+            context: context,
+            elseThen: swi_createEntityInContext)
+            .swi_updateWith(json)
       }
-      
-      return swi_ifFindFirst(relatedByAttribute,
-                                   value: value,
-                                 context: context,
-                                elseThen: swi_createEntityInContext)
-         .swi_updateWith(json)
    }
+   
 }
 
 extension String {
