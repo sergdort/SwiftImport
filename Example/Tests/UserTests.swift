@@ -13,12 +13,6 @@ import MagicalRecord
 import SwiftImport
 
 
-class JSONFileReader { }
-
-func JSONFromFileName(name: String) -> JSON? {
-   let path = NSBundle(forClass: JSONFileReader.self).pathForResource(name, ofType: "json")
-   return JSONFromFile -<< path
-}
 
 class UserTests: QuickSpec {
    
@@ -43,7 +37,9 @@ class UserTests: QuickSpec {
          
          it("should import Users", closure: { () -> () in
             do {
-               if let users = try SwiftImport<User>.importObjects <^> NSManagedObjectContext.MR_defaultContext() <*> JSONObjects -<< JSONFromFileName -<< "Users"  {
+               if let users = try SwiftImport<User>.importObjects
+                  <^> NSManagedObjectContext.MR_defaultContext()
+                  <*> JSONObjects -<< JSONFromFileName -<< "Users"  {
                   
                   expect(users[0].userId).to(equal(1))
                   expect(users[0].name).to(equal("John"))
@@ -65,13 +61,14 @@ class UserTests: QuickSpec {
                }
             } catch {
                XCTAssert(false)
-               return
             }
          })
          
          it("should create user", closure: { () -> () in
             do {
-               let user = try SwiftImport<User>.importObject <^> NSManagedObjectContext.MR_defaultContext() <*> JSONObject -<< JSONFromFileName -<< "User"
+               let user = try SwiftImport<User>.importObject
+                  <^> NSManagedObjectContext.MR_defaultContext()
+                  <*> JSONObject -<< JSONFromFileName -<< "User"
                let event = user?.createdEvents?.anyObject() as? Event
                let partisipant = event?.participants?.anyObject() as? User
                let partisipantCreatedEvent = partisipant?.createdEvents?.anyObject() as? Event
@@ -90,13 +87,14 @@ class UserTests: QuickSpec {
                
             } catch {
                XCTAssert(false, "\(error)")
-               return
             }
          })
          
          it("should throw error", closure: { () -> () in
             do {
-               _ = try SwiftImport<User>.importObjects <^> NSManagedObjectContext.MR_defaultContext() <*> JSONObjects -<< JSONFromFileName -<< "WrongUser"
+               _ = try SwiftImport<User>.importObjects
+                  <^> NSManagedObjectContext.MR_defaultContext()
+                  <*> JSONObjects -<< JSONFromFileName -<< "WrongUser"
                XCTAssert(false)
             } catch {
                XCTAssert(true)
@@ -106,12 +104,27 @@ class UserTests: QuickSpec {
          it("should not import user", closure: { () -> () in
             
             do {
-               _ = try SwiftImport<User>.importObject <^> NSManagedObjectContext.MR_defaultContext() <*> JSONObject -<< JSONFromFileName -<< "Event"
+               _ = try SwiftImport<User>.importObject
+                  <^> NSManagedObjectContext.MR_defaultContext()
+                  <*> JSONObject -<< JSONFromFileName -<< "Event"
                XCTAssert(false, "Should throw error")
             } catch {
                XCTAssert(true)
             }
             
+         })
+         
+         it("should not have events", closure: { () -> () in
+            do {
+               let user = try SwiftImport<User>.importObject
+                  <^> NSManagedObjectContext.MR_defaultContext()
+                  <*> JSONObject -<< JSONFromFileName -<< "UserWrongRelations"
+               
+               expect(user?.createdEvents?.count).to(equal(0))
+               
+            } catch {
+               XCTAssert(false)
+            }
          })
 
       

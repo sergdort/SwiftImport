@@ -1,8 +1,8 @@
 //
-//  City.swift
+//  DummyEntity.swift
 //  SwiftImport
 //
-//  Created by Segii Shulga on 8/30/15.
+//  Created by Segii Shulga on 12/15/15.
 //  Copyright © 2015 CocoaPods. All rights reserved.
 //
 
@@ -10,22 +10,19 @@ import Foundation
 import CoreData
 import SwiftImport
 
-class City: NSManagedObject {
+
+class DummyEntity: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 
 }
 
-extension City {
-   override class var map:[String : String] {
-      return [ "cityId" : "id"]
-   }
-   
+extension DummyEntity {
    override class var relatedByAttribute: String {
-      return "cityId"
+      return "entityId"
    }
    
    override class var relatedJsonKey: String {
-      return "id"
+      return "entityId"
    }
 }

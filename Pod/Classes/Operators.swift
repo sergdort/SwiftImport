@@ -15,11 +15,11 @@ infix operator -<< { associativity right precedence 150 }
 infix operator <<< { associativity right precedence 160 }
 infix operator >>> { associativity left precedence 160 }
 
-public func <^><T, U>(f: T -> U, a: T?) -> U? {
+public func <^> <T, U>(f: T -> U, a: T?) -> U? {
    return a.map(f)
 }
 
-public func <^><T, U>(f:T throws -> U, a: T?) -> U? {
+public func <^> <T, U>(f:T throws -> U, a: T?) -> U? {
    do {
      return try a.map(f)
    } catch {
@@ -27,11 +27,11 @@ public func <^><T, U>(f:T throws -> U, a: T?) -> U? {
    }
 }
 
-public func <*><T, U>(f: (T -> U)?, a: T?) -> U? {
+public func <*> <T, U>(f: (T -> U)?, a: T?) -> U? {
    return a.apply(f)
 }
 
-public func <*><T, U>(f: (T throws -> U)?, a:T?) throws -> U? {
+public func <*> <T, U>(f: (T throws -> U)?, a:T?) throws -> U? {
    do {
       return try a.apply(f)
    } catch {
@@ -39,11 +39,11 @@ public func <*><T, U>(f: (T throws -> U)?, a:T?) throws -> U? {
    }
 }
 
-public func >>-<T, U>(a: T?, f: T -> U?) -> U? {
+public func >>- <T, U>(a: T?, f: T -> U?) -> U? {
    return a.flatMap(f)
 }
 
-public func >>-<T, U>(a:T?, f: T throws -> U?) throws -> U? {
+public func >>- <T, U>(a:T?, f: T throws -> U?) throws -> U? {
    do {
       return try a.flatMap(f)
    } catch {
@@ -51,35 +51,15 @@ public func >>-<T, U>(a:T?, f: T throws -> U?) throws -> U? {
    }
 }
 
-public func -<<<T, U>(f: T -> U?, a: T?) -> U? {
+public func -<< <T, U>(f: T -> U?, a: T?) -> U? {
    return a.flatMap(f)
 }
 
-public func -<<<T, U>(f:T throws -> U?, a: T?) throws -> U? {
+public func -<< <T, U>(f:T throws -> U?, a: T?) throws -> U? {
    do {
       return try a.flatMap(f)
    } catch {
       throw error
    }
-}
-
-public func <<< <T, U>(f: T -> U, a: T) -> U {
-   return f(a)
-}
-
-public func <<< <T, U>(f: T throws -> U, a: T) throws -> U? {
-   do {
-      return try f(a)
-   } catch {
-      throw error
-   }
-}
-
-public func >>> <T, U>(a:T, f: T -> U) -> U {
-   return f(a)
-}
-
-public func wrap<T>(a:T) -> T? {
-   return .Some(a)
 }
 
