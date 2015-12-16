@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SwiftImport
 
 class User: NSManagedObject {
 
@@ -16,7 +17,7 @@ class User: NSManagedObject {
 }
 
 extension User {
-   override class func mapped() -> [String : String] {
+   override class var map:[String : String] {
       return [ "userId" : "id", "lastName" : "last_name", "homeCity" : "home_city", "createdEvents" : "events"]
    }
 

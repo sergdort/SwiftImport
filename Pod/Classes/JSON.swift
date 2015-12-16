@@ -6,18 +6,10 @@
 //  Copyright © 2015 Sergey Shulga. All rights reserved.
 //
 
-import Foundation
-import CoreData
-
 public typealias JSON = AnyObject
 public typealias JSONDictionary = Dictionary<String, JSON>
 public typealias JSONArray = Array<JSON>
 
-
-
-public func JSONFromFile(path:String) -> JSON? {
-   return NSData(contentsOfFile: path) >>- JSONObjectWithData
-}
 public func JSONObjectWithData(data: NSData) -> AnyObject? {
    do { return try NSJSONSerialization.JSONObjectWithData(data, options: []) }
    catch { return .None }
@@ -25,10 +17,6 @@ public func JSONObjectWithData(data: NSData) -> AnyObject? {
 
 public func JSONString(object: JSON) -> String? {
    return object as? String
-}
-
-public func JSONNumber(object: JSON) -> NSNumber? {
-   return object as? NSNumber
 }
 
 public func JSONObject(object: JSON) -> JSONDictionary? {

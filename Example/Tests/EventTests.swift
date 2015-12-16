@@ -28,14 +28,12 @@ class EventTests: QuickSpec {
          
          it("should throw", closure: { () -> () in
 //            WrongEvent
-            guard let json = JSONFromFileName -<< "WrongEvent" as? [JSONDictionary] else {
-               XCTAssert(false)
-               return
-            }
-            
             do {
-               _ = try SwiftImport<Event>.importObjects(NSManagedObjectContext.MR_defaultContext())(array: json)
-               XCTAssert(false)
+               let event = try SwiftImport<Event>.importObjects
+                  <^> NSManagedObjectContext.MR_defaultContext()
+                  <*> JSONObjects -<< JSONFromFile -<< "WrongEvent"
+               
+               expect(event).to(beNil())
             } catch {
                XCTAssert(true)
             }
@@ -46,7 +44,9 @@ class EventTests: QuickSpec {
             
             do {
                
-               if let events = try SwiftImport<Event>.importObjects <^> NSManagedObjectContext.MR_defaultContext() <*> JSONObjects -<< JSONFromFile -<< "Events"  {
+               if let events = try SwiftImport<Event>.importObjects
+                  <^> NSManagedObjectContext.MR_defaultContext()
+                  <*> JSONObjects -<< JSONFromFile -<< "Events"  {
                   
                   expect(events[0].eventId).to(equal(1))
                   expect(events[0].name).to(equal("WWDC 2015"))

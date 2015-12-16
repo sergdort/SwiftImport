@@ -28,7 +28,9 @@ class DummyEntityTests: QuickSpec {
          
          it("should import correctly", closure: { () -> () in
             do {
-               let dummy = try SwiftImport<DummyEntity>.importObject <^> NSManagedObjectContext.MR_defaultContext() <*> JSONObject -<< JSONFromFileName -<< "DummyEntity"
+               let dummy = try SwiftImport<DummyEntity>.importObject
+                  <^> NSManagedObjectContext.MR_defaultContext()
+                  <*> JSONObject -<< JSONFromFileName -<< "DummyEntity"
                
                expect(dummy?.entityId).to(equal(1))
                expect(dummy?.name).to(equal("Dummy"))

@@ -24,6 +24,12 @@ class ExtensionTests:QuickSpec {
             let str = ""
             expect(str.swi_capitalizedFirstCharacterString()).to(beNil())
          })
+         
+         it("should", closure: { () -> () in
+            let str = "  str";
+            let cap = str.swi_capitalizedFirstCharacterString()
+            expect(cap).to(equal(str))
+         })
       }
    }
 }

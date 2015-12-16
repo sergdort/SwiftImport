@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SwiftImport
 
 
 class DummyEntity: NSManagedObject {

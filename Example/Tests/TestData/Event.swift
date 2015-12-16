@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SwiftImport
 
 class Event: NSManagedObject {
 
@@ -16,7 +17,7 @@ class Event: NSManagedObject {
 }
 
 extension Event {
-   override class func mapped() -> [String : String] {
+   override class var map:[String : String] {
       return [ "eventId" : "id", "locationName" : "location_name"]
    }
    
