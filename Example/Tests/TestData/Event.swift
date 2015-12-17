@@ -25,8 +25,4 @@ extension Event {
       return "eventId"
    }
    
-   override class var relatedJsonKey: String {
-      return "id"
-   }
-   
 }

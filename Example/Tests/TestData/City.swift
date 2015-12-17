@@ -24,8 +24,4 @@ extension City {
    override class var relatedByAttribute: String {
       return "cityId"
    }
-   
-   override class var relatedJsonKey: String {
-      return "id"
-   }
 }

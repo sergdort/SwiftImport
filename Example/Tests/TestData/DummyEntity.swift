@@ -21,8 +21,4 @@ extension DummyEntity {
    override class var relatedByAttribute: String {
       return "entityId"
    }
-   
-   override class var relatedJsonKey: String {
-      return "entityId"
-   }
 }

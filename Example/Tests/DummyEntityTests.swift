@@ -32,12 +32,27 @@ class DummyEntityTests: QuickSpec {
                   <^> NSManagedObjectContext.MR_defaultContext()
                   <*> JSONObject -<< JSONFromFileName -<< "DummyEntity"
                
-               expect(dummy?.entityId).to(equal(1))
+               expect(dummy?.entityId).to(equal("1"))
                expect(dummy?.name).to(equal("Dummy"))
                expect(dummy?.secondName).to(equal("Entity"))
             } catch {
                XCTAssert(false)
             }
+         })
+         
+         it("should throw error", closure: { () -> () in
+            
+            do {
+               _ = try SwiftImport<DummyEntity>.importObject
+                  <^> NSManagedObjectContext.MR_defaultContext()
+                  <*> JSONObject -<< JSONFromFileName -<< "DumyEntityWithWrongValue"
+               
+               XCTAssert(false)
+            } catch {
+               print(error)
+               XCTAssert(true)
+            }
+            
          })
          
       }

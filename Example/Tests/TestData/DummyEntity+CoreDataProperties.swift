@@ -14,7 +14,7 @@ import CoreData
 
 extension DummyEntity {
 
-    @NSManaged var entityId: NSNumber?
+    @NSManaged var entityId: String?
     @NSManaged var name: String?
     @NSManaged var secondName: String?
 

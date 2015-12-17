@@ -24,9 +24,4 @@ extension User {
    override class var relatedByAttribute: String {
       return "userId"
    }
-   
-   override class var relatedJsonKey: String {
-      return "id"
-   }
-   
 }

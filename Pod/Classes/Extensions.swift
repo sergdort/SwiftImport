@@ -17,19 +17,16 @@ extension NSManagedObject:JSONToEntityMapable {
    public class var relatedByAttribute:String {
       return ""
    }
-   public class var relatedJsonKey:String {
-      return ""
-   }
 }
 
 extension NSManagedObject:Importable {
    public static func importIn(context: NSManagedObjectContext) -> (json: JSONDictionary) throws -> NSManagedObject {
       return { json in
-         guard let value = json[self.relatedJsonKey] else  {
+         guard let value = json[map[relatedByAttribute] ?? relatedByAttribute] else  {
             throw ImportError.InvalidJSON
          }
          
-         return swi_ifFindFirst(relatedByAttribute,
+         return try swi_ifFindFirst(relatedByAttribute,
             value: value,
             context: context,
             elseThen: swi_createEntityInContext)
@@ -55,12 +52,7 @@ extension NSManagedObject {
          
          let request = NSFetchRequest()
          request.entity = NSEntityDescription.entityForName(swi_entityName, inManagedObjectContext: context)
-         
-         if let str = value as? String {
-            request.predicate = NSPredicate(format: "%K == %@", key, str)
-         } else {
-            request.predicate = NSPredicate(format:"\(key) == \(value)")
-         }
+         request.predicate = NSPredicate(format: "%K == \(value)", key)
          
          do {
             let data = try context.executeFetchRequest(request)
@@ -87,90 +79,123 @@ extension NSManagedObject {
 
 extension NSManagedObject {
    
-   private func swi_setValue(value:AnyObject) -> (key:String) -> NSManagedObject {
-      return { key in
-         self.setValue(value, forKey: key)
-         return self
+   func swi_updateWith(json:JSONDictionary) throws -> NSManagedObject {
+      do {
+         try swi_updatePropertiesWith(json)
+         try swi_updateRelationsWith(json)
+      } catch {
+         throw error
       }
-   }
-   
-   private func swi_updatePropertiesWith(json:JSONDictionary) {
-      entity.attributesByName.forEach { (tuple) -> () in
-         swi_setValue
-            <^> json[classForCoder.map[tuple.0] ?? tuple.0]
-            <*> tuple.0
-      }
-   }
-   
-   private func swi_updateRelationsWith(json:JSONDictionary) {
-      entity.relationshipsByName.forEach { (tuple) -> () in
-         swi_updateRelationship
-            <^> JSONObject -<< json[classForCoder.map[tuple.0] ?? tuple.0]
-            <*> tuple.0
-         swi_updateRelationships
-            <^> JSONObjects -<< json[classForCoder.map[tuple.0] ?? tuple.0]
-            <*> tuple.0
-      }
-   }
-   
-   func swi_updateWith(json:JSONDictionary) -> NSManagedObject {
-      swi_updatePropertiesWith(json)
-      swi_updateRelationsWith(json)
       return self
    }
    
-   func swi_updateRelationship(json:JSONDictionary) -> (key:String) -> Void {
+   private func swi_updatePropertiesWith(json:JSONDictionary) throws -> Void {
+      try entity.attributesByName.forEach { (tuple) -> () in
+         do {
+            try swi_updateAttribute(tuple.1)
+               <^> json[classForCoder.map[tuple.0] ?? tuple.0]
+               <*> tuple.0
+         } catch {
+            throw error
+         }
+      }
+   }
+   
+   private func swi_updateRelationsWith(json:JSONDictionary) throws -> Void {
+      try entity.relationshipsByName.forEach { (tuple) -> () in
+         do {
+            try swi_updateRelationship
+               <^> JSONObject -<< json[classForCoder.map[tuple.0] ?? tuple.0]
+               <*> tuple.0
+            try swi_updateRelationships
+               <^> JSONObjects -<< json[classForCoder.map[tuple.0] ?? tuple.0]
+               <*> tuple.0
+         } catch {
+            throw error
+         }
+      }
+   }
+   
+   private func swi_updateRelationship(json:JSONDictionary) -> (key:String) throws -> Void {
       return { key in
          guard let relation = self.entity.relationshipsByName[key],
             entity = relation.destinationEntity,
             name = entity.managedObjectClassName,
             clas = NSClassFromString(name) as? NSManagedObject.Type,
-            value = json[clas.relatedJsonKey],
+            value = json[clas.map[clas.relatedByAttribute] ?? clas.relatedByAttribute],
             context = self.managedObjectContext
             where relation.toMany == false else {
                return;
          }
-         
-         let obj = clas.swi_ifFindFirst(clas.relatedByAttribute,
-            value: value,
-            context: context,
-            elseThen: clas.swi_createEntityInContext)
-            .swi_updateWith(json)
-         self.setValue(obj, forKey: key)
+         do {
+            let obj = try clas.swi_ifFindFirst(clas.relatedByAttribute,
+               value: value,
+               context: context,
+               elseThen: clas.swi_createEntityInContext)
+               .swi_updateWith(json)
+            self.setValue(obj, forKey: key) // setting value for relationship
+         } catch {
+            throw error
+         }
       }
    }
    
-   func swi_updateRelationships(array:[JSONDictionary])(key:String) {
-      guard let relation = self.entity.relationshipsByName[key],
-         entity = relation.destinationEntity,
-         name = entity.managedObjectClassName,
-         clas = NSClassFromString(name) as? NSManagedObject.Type
-         where relation.toMany else {
-            return;
-      }
-      
-      for json in array {
-         guard let value = json[clas.relatedJsonKey],
-            let context = self.managedObjectContext else {
-               return
+   private func swi_updateRelationships(array:[JSONDictionary]) -> (key:String) throws -> Void {
+      return { key in
+         guard let relation = self.entity.relationshipsByName[key],
+            entity = relation.destinationEntity,
+            name = entity.managedObjectClassName,
+            clas = NSClassFromString(name) as? NSManagedObject.Type
+            where relation.toMany else {
+               return;
          }
          
-         let obj = clas.swi_ifFindFirst(clas.relatedByAttribute,
-            value: value,
-            context: context,
-            elseThen: clas.swi_createEntityInContext)
-            .swi_updateWith(json)
-         let selector = Selector("add\(relation.name.swi_capitalizedFirstCharacterString()!)Object:")
-         if self.respondsToSelector(selector) {
-            self.performSelector(selector, withObject: obj)
+         for json in array {
+            guard let value = json[clas.map[clas.relatedByAttribute] ?? clas.relatedByAttribute],
+                  context = self.managedObjectContext else {
+                  return
+            }
+            do {
+               let obj = try clas.swi_ifFindFirst(clas.relatedByAttribute,
+                  value: value,
+                  context: context,
+                  elseThen: clas.swi_createEntityInContext)
+                  .swi_updateWith(json)
+               let selector = Selector("add\(relation.name.swi_capitalizedFirstCharacterString()!)Object:")
+               
+               assert(self.respondsToSelector(selector))//this should not happened
+               
+               if self.respondsToSelector(selector) {
+                  self.performSelector(selector, withObject: obj)
+               }
+            } catch {
+               throw error
+            }
+
          }
       }
+   }
+   
+   private func swi_updateAttribute(att:NSAttributeDescription)
+      -> (value:AnyObject)
+      -> (key:String) throws -> NSManagedObject {
+         return { value in
+            return { key in
+               if att.attributeValueClassName == NSStringFromClass(value.classForCoder!) {
+                  self.setValue(value, forKey: key)
+               } else {
+                  throw ImportError.WrongValueForKey(value: value, key: key)
+               }
+               return self
+            }
+         }
+         
    }
    
 }
 
 extension String {
-   public func swi_capitalizedFirstCharacterString() -> String? {
+   func swi_capitalizedFirstCharacterString() -> String? {
       if characters.count > 0 {
          let firstChar = self.substringToIndex(self.startIndex.successor()).capitalizedString
          return firstChar + self.substringFromIndex(self.startIndex.successor())
