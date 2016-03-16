@@ -86,12 +86,8 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-SwiftImport_Tests/MagicalRecord.framework"
   install_framework "Pods-SwiftImport_Tests/Nimble.framework"
-  install_framework "Pods-SwiftImport_Tests/Quick.framework"
-  install_framework "Pods-SwiftImport_Tests/SwiftImport.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-SwiftImport_Tests/MagicalRecord.framework"
   install_framework "Pods-SwiftImport_Tests/Nimble.framework"
-  install_framework "Pods-SwiftImport_Tests/Quick.framework"
-  install_framework "Pods-SwiftImport_Tests/SwiftImport.framework"
 fi

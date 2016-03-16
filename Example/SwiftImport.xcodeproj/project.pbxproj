@@ -10,7 +10,19 @@
 		842183EB1B92407900120D30 /* WrongEvent.json in Resources */ = {isa = PBXBuildFile; fileRef = 842183EA1B92407900120D30 /* WrongEvent.json */; };
 		842183EE1B93187300120D30 /* City+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842183EC1B93187300120D30 /* City+CoreDataProperties.swift */; };
 		842183EF1B93187300120D30 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842183ED1B93187300120D30 /* City.swift */; };
-		8486D8EC1C20775800ED219A /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8486D8EB1C20775800ED219A /* TestHelpers.swift */; };
+		848109371C9087FA001C645B /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8481092F1C9087FA001C645B /* Enums.swift */; };
+		848109381C9087FA001C645B /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848109301C9087FA001C645B /* Protocols.swift */; };
+		848109391C9087FA001C645B /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848109311C9087FA001C645B /* GlobalFunctions.swift */; };
+		8481093A1C9087FA001C645B /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848109321C9087FA001C645B /* Optional.swift */; };
+		8481093D1C908885001C645B /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8481093C1C908885001C645B /* TestHelpers.swift */; };
+		848109401C908C31001C645B /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6BD1B92320000D0F373 /* UserTests.swift */; };
+		84904E4D1C986D9300986712 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842183E81B92367300120D30 /* EventTests.swift */; };
+		84904E4E1C986DF300986712 /* CoreDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8481093E1C9088B2001C645B /* CoreDataTestCase.swift */; };
+		84904E571C98737900986712 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84904E531C98737900986712 /* Extensions.swift */; };
+		84904E581C98737900986712 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84904E541C98737900986712 /* JSON.swift */; };
+		84904E591C98737900986712 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84904E551C98737900986712 /* Operators.swift */; };
+		84904E5A1C98737900986712 /* SwiftImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84904E561C98737900986712 /* SwiftImport.swift */; };
+		84904E5B1C994CF400986712 /* DummyEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EBFAA51C2051C400AA5ECF /* DummyEntityTests.swift */; };
 		84D4B6B51B9231D500D0F373 /* Events.json in Resources */ = {isa = PBXBuildFile; fileRef = 84D4B6AD1B9231D500D0F373 /* Events.json */; };
 		84D4B6B61B9231D500D0F373 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6AE1B9231D500D0F373 /* Event.swift */; };
 		84D4B6B71B9231D500D0F373 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6AF1B9231D500D0F373 /* Event+CoreDataProperties.swift */; };
@@ -25,9 +37,6 @@
 		84EBFAA11C20512200AA5ECF /* DummyEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EBFA9F1C20512200AA5ECF /* DummyEntity+CoreDataProperties.swift */; };
 		84EBFAA21C20512200AA5ECF /* DummyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EBFAA01C20512200AA5ECF /* DummyEntity.swift */; };
 		84EBFAA41C20516E00AA5ECF /* DummyEntity.json in Resources */ = {isa = PBXBuildFile; fileRef = 84EBFAA31C20516E00AA5ECF /* DummyEntity.json */; };
-		84EBFAA61C2051C400AA5ECF /* DummyEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EBFAA51C2051C400AA5ECF /* DummyEntityTests.swift */; };
-		84FD1CF81B9382EA0008A03B /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6BD1B92320000D0F373 /* UserTests.swift */; };
-		84FD1CF91B9382F10008A03B /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842183E81B92367300120D30 /* EventTests.swift */; };
 		84FD1CFD1B95AB4D0008A03B /* User.json in Resources */ = {isa = PBXBuildFile; fileRef = 84FD1CFC1B95AB4D0008A03B /* User.json */; };
 		84FD1CFF1B95E0B40008A03B /* Event.json in Resources */ = {isa = PBXBuildFile; fileRef = 84FD1CFE1B95E0B40008A03B /* Event.json */; };
 		E5EF5DC274935005BB27C71C /* Pods_SwiftImport_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14BC554E04FD6F2A61DDB67 /* Pods_SwiftImport_Tests.framework */; };
@@ -43,7 +52,16 @@
 		842183EA1B92407900120D30 /* WrongEvent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = WrongEvent.json; sourceTree = "<group>"; };
 		842183EC1B93187300120D30 /* City+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "City+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		842183ED1B93187300120D30 /* City.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
-		8486D8EB1C20775800ED219A /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		8481092F1C9087FA001C645B /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		848109301C9087FA001C645B /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		848109311C9087FA001C645B /* GlobalFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
+		848109321C9087FA001C645B /* Optional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
+		8481093C1C908885001C645B /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		8481093E1C9088B2001C645B /* CoreDataTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTestCase.swift; sourceTree = "<group>"; };
+		84904E531C98737900986712 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		84904E541C98737900986712 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
+		84904E551C98737900986712 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		84904E561C98737900986712 /* SwiftImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftImport.swift; sourceTree = "<group>"; };
 		84D4B6AD1B9231D500D0F373 /* Events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Events.json; sourceTree = "<group>"; };
 		84D4B6AE1B9231D500D0F373 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		84D4B6AF1B9231D500D0F373 /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -82,6 +100,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				848109291C9087B0001C645B /* Pod */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
@@ -101,7 +120,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				8486D8EB1C20775800ED219A /* TestHelpers.swift */,
+				8481093B1C908848001C645B /* Helpers */,
 				84D4B6BD1B92320000D0F373 /* UserTests.swift */,
 				842183E81B92367300120D30 /* EventTests.swift */,
 				84EBFAA51C2051C400AA5ECF /* DummyEntityTests.swift */,
@@ -146,6 +165,39 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		848109291C9087B0001C645B /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				8481092A1C9087BF001C645B /* Classes */,
+			);
+			name = Pod;
+			path = ../Pod;
+			sourceTree = "<group>";
+		};
+		8481092A1C9087BF001C645B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				84904E561C98737900986712 /* SwiftImport.swift */,
+				8481092F1C9087FA001C645B /* Enums.swift */,
+				848109301C9087FA001C645B /* Protocols.swift */,
+				84904E531C98737900986712 /* Extensions.swift */,
+				84904E541C98737900986712 /* JSON.swift */,
+				84904E551C98737900986712 /* Operators.swift */,
+				848109311C9087FA001C645B /* GlobalFunctions.swift */,
+				848109321C9087FA001C645B /* Optional.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		8481093B1C908848001C645B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8481093E1C9088B2001C645B /* CoreDataTestCase.swift */,
+				8481093C1C908885001C645B /* TestHelpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		84D4B6AC1B92316000D0F373 /* TestData */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +239,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SwiftImport_Tests" */;
 			buildPhases = (
+				84904E4F1C98704900986712 /* ShellScript */,
 				A1B290C8FA2710015C119551 /* Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
@@ -287,6 +340,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftImport_Tests/Pods-SwiftImport_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		84904E4F1C98704900986712 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
 		A1B290C8FA2710015C119551 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -310,18 +376,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				84D4B6BA1B9231D500D0F373 /* User.swift in Sources */,
+				84904E591C98737900986712 /* Operators.swift in Sources */,
+				84904E571C98737900986712 /* Extensions.swift in Sources */,
+				84904E5B1C994CF400986712 /* DummyEntityTests.swift in Sources */,
 				84D4B6B81B9231D500D0F373 /* Model.xcdatamodel in Sources */,
-				84FD1CF81B9382EA0008A03B /* UserTests.swift in Sources */,
-				84FD1CF91B9382F10008A03B /* EventTests.swift in Sources */,
+				8481093D1C908885001C645B /* TestHelpers.swift in Sources */,
+				848109391C9087FA001C645B /* GlobalFunctions.swift in Sources */,
 				842183EF1B93187300120D30 /* City.swift in Sources */,
 				84EBFAA21C20512200AA5ECF /* DummyEntity.swift in Sources */,
 				84D4B6B71B9231D500D0F373 /* Event+CoreDataProperties.swift in Sources */,
+				84904E581C98737900986712 /* JSON.swift in Sources */,
 				842183EE1B93187300120D30 /* City+CoreDataProperties.swift in Sources */,
-				8486D8EC1C20775800ED219A /* TestHelpers.swift in Sources */,
+				848109381C9087FA001C645B /* Protocols.swift in Sources */,
+				84904E4D1C986D9300986712 /* EventTests.swift in Sources */,
 				84D4B6BB1B9231D500D0F373 /* User+CoreDataProperties.swift in Sources */,
+				848109401C908C31001C645B /* UserTests.swift in Sources */,
+				84904E5A1C98737900986712 /* SwiftImport.swift in Sources */,
 				84EBFAA11C20512200AA5ECF /* DummyEntity+CoreDataProperties.swift in Sources */,
 				84D4B6B61B9231D500D0F373 /* Event.swift in Sources */,
-				84EBFAA61C2051C400AA5ECF /* DummyEntityTests.swift in Sources */,
+				8481093A1C9087FA001C645B /* Optional.swift in Sources */,
+				848109371C9087FA001C645B /* Enums.swift in Sources */,
+				84904E4E1C986DF300986712 /* CoreDataTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

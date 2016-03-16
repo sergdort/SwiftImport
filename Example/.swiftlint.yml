@@ -1,0 +1,9 @@
+excluded:
+- Pods/MagicalRecord
+- Pods/Nimble
+- Pods/Quick
+disabled_rules:
+- function_body_length
+- variable_name
+included:
+- ../Pod

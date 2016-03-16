@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SwiftImport
 
 class City: NSManagedObject {
 
@@ -16,11 +17,10 @@ class City: NSManagedObject {
 }
 
 extension City {
-   override class var map:[String : String] {
+   override class var map: [String : String] {
       return [ "cityId" : "id"]
    }
-   
-   override class var primaryAttribute: String {
+   override class var relatedByAttribute: String {
       return "cityId"
    }
 }

@@ -1,35 +1,22 @@
 PODS:
   - MagicalRecord (2.3.0)
   - Nimble (2.0.0-rc.3)
-  - Quick (0.6.0)
-  - SwiftImport (1.0.0)
 
 DEPENDENCIES:
   - MagicalRecord
   - Nimble (from `https://github.com/Quick/Nimble.git`)
-  - Quick (from `https://github.com/Quick/Quick.git`)
-  - SwiftImport (from `../`)
 
 EXTERNAL SOURCES:
   Nimble:
     :git: https://github.com/Quick/Nimble.git
-  Quick:
-    :git: https://github.com/Quick/Quick.git
-  SwiftImport:
-    :path: ../
 
 CHECKOUT OPTIONS:
   Nimble:
     :commit: bdf994fff109dd6fe9583cd97cbec150a8d6b883
     :git: https://github.com/Quick/Nimble.git
-  Quick:
-    :commit: c86bf7b4c2525a67777f3577a90d8265d85b4d5f
-    :git: https://github.com/Quick/Quick.git
 
 SPEC CHECKSUMS:
   MagicalRecord: 89eb7d7ead39fb37f01c3d010665ee94d17f8dba
   Nimble: 2f64d173ad23dc39f10110840a1ed15f29ef75e8
-  Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
-  SwiftImport: ccbb851884790c21e517248e71d705d7aa90c3ad
 
 COCOAPODS: 0.39.0
