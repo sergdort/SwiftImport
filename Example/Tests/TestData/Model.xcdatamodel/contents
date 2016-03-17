@@ -6,7 +6,7 @@
         <relationship name="people" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="homeCity" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="DummyEntity" representedClassName=".DummyEntity" syncable="YES">
-        <attribute name="entityId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="entityId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="secondName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -28,8 +28,8 @@
     </entity>
     <elements>
         <element name="City" positionX="-54" positionY="54" width="128" height="90"/>
+        <element name="DummyEntity" positionX="-63" positionY="54" width="128" height="90"/>
         <element name="Event" positionX="-45" positionY="27" width="128" height="135"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="135"/>
-        <element name="DummyEntity" positionX="-63" positionY="54" width="128" height="90"/>
     </elements>
 </model>

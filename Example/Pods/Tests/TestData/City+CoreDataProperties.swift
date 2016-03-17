@@ -1,8 +1,8 @@
 //
-//  DummyEntity+CoreDataProperties.swift
+//  City+CoreDataProperties.swift
 //  SwiftImport
 //
-//  Created by Segii Shulga on 12/15/15.
+//  Created by Segii Shulga on 9/1/15.
 //  Copyright © 2015 CocoaPods. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -12,10 +12,10 @@
 import Foundation
 import CoreData
 
-extension DummyEntity {
+extension City {
 
-    @NSManaged var entityId: String?
+    @NSManaged var cityId: NSNumber?
     @NSManaged var name: String?
-    @NSManaged var secondName: String?
+    @NSManaged var people: NSSet?
 
 }

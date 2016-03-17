@@ -8,6 +8,8 @@
 
 import Foundation
 import CoreData
+import SwiftImport
+
 
 class DummyEntity: NSManagedObject {
 
@@ -16,7 +18,7 @@ class DummyEntity: NSManagedObject {
 }
 
 extension DummyEntity {
-   override class var primaryAttribute: String {
+   override class var relatedByAttribute: String {
       return "entityId"
    }
 }

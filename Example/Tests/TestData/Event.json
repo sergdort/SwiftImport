@@ -1,6 +1,22 @@
 {
-   "eventId" : 1,
+   "id" : 1,
    "name" : "WWDC 2015",
    "location_name" : "San Francisco",
-   "address" : "Place # X"
+   "address" : "Place # X",
+   "participants" : [
+                     {
+                     "id" : 1,
+                     "name" : "John",
+                     "last_name" : "Snow",
+                     "home_city" : {"id":1, "name" : "Winterfell"},
+                     "events" : [{"id" : 1, "name" : "Cool event", "location_name" : "Cool location"}, {"id" : 2, "name" : "Cool event2", "location_name" : "Cool location2"}]
+                     },
+                     {
+                     "id" : 2,
+                     "name" : "Tirion",
+                     "last_name" : "Lannister",
+                     "home_city" : {"id":2, "name" : "Lannisport"},
+                     "events" : [{"id" : 3, "name" : "Cool event", "location_name" : "Cool location"}, {"id" : 4, "name" : "Cool event2", "location_name" : "Cool location2"}]
+                     }
+                     ]
 }

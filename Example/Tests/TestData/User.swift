@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreData
-import SwiftImport
 
 class User: NSManagedObject {
 
@@ -21,12 +20,7 @@ extension User {
       return [ "userId" : "id", "lastName" : "last_name", "homeCity" : "home_city", "createdEvents" : "events"]
    }
 
-   override class var relatedByAttribute: String {
+   override class var primaryAttribute: String {
       return "userId"
    }
-   
-   override class var relatedJsonKey: String {
-      return "id"
-   }
-   
 }
