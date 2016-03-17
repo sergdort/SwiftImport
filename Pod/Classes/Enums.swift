@@ -9,7 +9,7 @@
 import Foundation
 
 public enum ImportError: ErrorType {
-   case MissingKey(String)
+   case MissingPrimaryAttribute(entityName: String)
    case TypeMismatch(value:AnyObject, key:String)
    case CastingError(object: AnyObject, targetType: Any.Type)
    case RelationTypeMismatch(expected: String, got: String)
@@ -19,10 +19,10 @@ public enum ImportError: ErrorType {
 extension ImportError: CustomStringConvertible {
    public var description: String {
       switch self {
-      case let .MissingKey(key):
-         return "MissingKey \(key)"
+      case let .MissingPrimaryAttribute(entityName):
+         return "Missing primary attribute for entity: \(entityName)"
       case let .TypeMismatch(tuple):
-         return "TypeMismatch class:\(tuple.value.classForCoder)" +
+         return "Type mismatch class:\(tuple.value.classForCoder)" +
          " value: \(tuple.value) for key: \(tuple.key)"
       case .CastingError(let tuple):
          return "Castring error object: \(tuple.object) to \(tuple.targetType)"
