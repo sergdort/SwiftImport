@@ -48,7 +48,7 @@ extension NSManagedObject {
       throws -> NSManagedObject {
       return { json in
          guard let value = json[map[primaryAttribute] ?? primaryAttribute] else {
-            throw ImportError.MissingKey("\(primaryAttribute) or \(map[primaryAttribute])")
+            throw ImportError.MissingPrimaryAttribute(entityName: swi_entityName)
          }
          return try swi_ifFindFirst(primaryAttribute,
             value: value,
