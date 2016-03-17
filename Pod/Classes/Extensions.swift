@@ -136,18 +136,16 @@ extension NSManagedObject {
             value = json[clas.map[clas.primaryAttribute] ?? clas.primaryAttribute],
             context = self.managedObjectContext
             where relation.toMany == false else {
-               throw ImportError.RelationTypeMismatch(expected: "To one", got: "To many")
+               throw ImportError.RelationTypeMismatch(entityName: self.classForCoder.swi_entityName,
+                  expected: "To one",
+                  got: "To many")
          }
-         do {
-            let obj = try clas.swi_ifFindFirst(clas.primaryAttribute,
-               value: value,
-               context: context,
-               elseThen: clas.swi_createEntityInContext)
-               .swi_updateWith(json)
-            self.setValue(obj, forKey: key) // setting value for relationship
-         } catch {
-            throw error
-         }
+         let obj = try clas.swi_ifFindFirst(clas.primaryAttribute,
+            value: value,
+            context: context,
+            elseThen: clas.swi_createEntityInContext)
+            .swi_updateWith(json)
+         self.setValue(obj, forKey: key) // setting value for relationship
       }
    }
    private func swi_updateRelationshipsWith(array: [JSONDictionary])
@@ -158,7 +156,9 @@ extension NSManagedObject {
             name = entity.managedObjectClassName,
             clas = NSClassFromString(name) as? NSManagedObject.Type
             where relation.toMany else {
-               throw ImportError.RelationTypeMismatch(expected: "To many", got: "To one")
+               throw ImportError.RelationTypeMismatch(entityName: self.classForCoder.swi_entityName,
+                  expected: "To many",
+                  got: "To one")
          }
          try array.forEach {
             guard let value = $0[clas.map[clas.primaryAttribute] ?? clas.primaryAttribute],
@@ -187,7 +187,10 @@ extension NSManagedObject {
                if att.attributeValueClassName == NSStringFromClass(value.classForCoder) {
                   self.setValue(value, forKey: key)
                } else {
-                  throw ImportError.TypeMismatch(value: value, key: key)
+                  throw ImportError.TypeMismatch(entityName: self.classForCoder.swi_entityName,
+                     expectedType: att.attributeValueClassName ?? "",
+                     type: value.dynamicType,
+                     key: key)
                }
                return self
             }

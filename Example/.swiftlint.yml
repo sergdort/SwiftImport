@@ -5,5 +5,6 @@ excluded:
 disabled_rules:
 - function_body_length
 - variable_name
+- force_cast
 included:
 - ../Pod
